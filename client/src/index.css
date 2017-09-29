@@ -1,0 +1,9 @@
+body {
+  background-color: #009688;
+}
+
+@media (max-width: 575px) { 
+  .form-title {
+    font-size: 19px;
+  }
+ }
