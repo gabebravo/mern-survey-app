@@ -27,37 +27,25 @@ createUser = (req, res) => {
 
 function userLogin(req, res) {
   // find the user
-    User.findOne({
-      email: req.body.email
-    }, function(err, user) {
-
-      if (err) throw err;
-
-      if (!user) {
-        res.json({ success: false, message: 'Authentication failed. Email not found.' });
-      } else if (user) {
-
-        // check if password matches
-        if (!user.comparePassword(req.body.password)) {
-          res.json({ success: false, message: 'Authentication failed. Wrong password.' });
-        } else {
-
-          // if user is found and password is right
-          // create a token
-          const token = jwt.sign(user, SECRET, { expiresIn: 3600 }); // 1 hour
-
-          // return the information including token as JSON
+  User.findOne({ email: req.body.email })
+    .then( user => {
+      if(user.comparePassword(req.body.password)){
+        const token = jwt.sign({}, SECRET, { expiresIn: 3600 }); // 1 hour
           res.status(200).json({
-            name: user.name,
-            admin: user.admin,
-            email: user.email,
-            success: true,
-            message: 'Sucessfully logged in!',
-            token: token
-          });
-        }
+          name: user.name,
+          admin: user.admin,
+          email: user.email,
+          success: true,
+          message: 'Sucessfully logged in!',
+          token: token
+        });
+      } else {
+        res.json({ success: false, message: 'Authentication failed. Email not found.' });
       }
-    });
+    })
+    .catch( err => {
+      res.json({ success: false, message: 'Authentication failed. Email not found.' });
+    })
 }
 
 function resetPassword(req, res) {

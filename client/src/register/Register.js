@@ -36,8 +36,9 @@ class Register extends Component {
   state = {
     isOpen: false,
     modalTitle: null,
-    modalBody: null,
-    isDisabled: true
+    modalBody: null, 
+    modalButton: null, 
+    shouldLinkToHomepage: true
   }
 
   handleTextInput = event => {
@@ -63,25 +64,55 @@ class Register extends Component {
     .then( response => {
       if(response.data.success){
         this.setState({ 
-          isOpen: !this.state.isOpen 
+          isOpen: !this.state.isOpen,
+          modalTitle: "Success",
+          modalBody: response.data.message,
+          modalButton: "Login", 
+          shouldLinkToHomepage: true
+        });
+      } else if (!response.data.success){
+        this.setState({ 
+          isOpen: !this.state.isOpen,
+          modalTitle: "Error",
+          modalBody: response.data.message, 
+          modalButton: "OK", 
+          shouldLinkToHomepage: false
+        });
+      }
+      this.props.resetRegisterForm();
+    })
+    .catch( response => {
+      if(!response.data.success){
+        this.setState({ 
+          isOpen: !this.state.isOpen,
+          modalTitle: "Error",
+          modalBody: "We were unable to regiter the user. Please try again.",
+          modalButton: "OK", 
+          shouldLinkToHomepage: false
         });
         this.props.resetRegisterForm();
       }
-    })
-    .catch( response => {
-      console.log('error', response.error);
     });
   }
 
-  render() {
-    const actions = [
+  render() { // this.state.shouldLinkToHomepage
+    const actions = this.state.shouldLinkToHomepage ?
+    [
       <Link to={'/'}>
         <FlatButton
-          label="Login"
+          label={this.state.modalButton || "Login"}
           primary={true}
         />
       </Link>
-    ];
+    ] :
+    [
+      <FlatButton
+        label={this.state.modalButton || "Login"}
+        primary={true}
+        onClick={ () => this.setState({ isOpen: !this.state.isOpen }) }
+      />
+    ] 
+
     const { firstName, lastName, email, password } = this.props.registerForm
     return (
       <div className="row center-xs" style={styles.form}>
@@ -138,11 +169,11 @@ class Register extends Component {
           </Card>
         </div>
         <Dialog
-          title="Success"
+          title={this.state.modalTitle}
           actions={actions}
           modal={true}
           open={this.state.isOpen}>
-          You have created a user account. Click the login button to go back to the homepage.
+          {this.state.modalBody}
         </Dialog>
       </div>
     )
