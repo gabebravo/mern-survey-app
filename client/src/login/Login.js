@@ -64,6 +64,7 @@ class Login extends Component {
           modalBody: response.data.message, 
           isAuthenticated: true
         });
+        sessionStorage.setItem('token', response.data.token)
         this.props.resetLoginForm();
       }
     })
