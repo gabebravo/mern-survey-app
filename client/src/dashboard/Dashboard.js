@@ -14,7 +14,6 @@ const styles = {
   },
   title: {
     backgroundColor: '#26c6da',
-    textShadow: '0 0 0.125px black'
   },
   paper: {
     marginBottom: '1rem'
