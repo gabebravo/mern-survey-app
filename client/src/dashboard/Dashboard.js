@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import Header from '../reusable/Header'
 import Paper from 'material-ui/Paper';
 import {Card, CardActions, CardTitle, CardText} from 'material-ui/Card';
 import Chip from 'material-ui/Chip';
@@ -15,8 +16,9 @@ const styles = {
   title: {
     backgroundColor: '#26c6da',
   },
-  paper: {
-    marginBottom: '1rem'
+  card: {
+    marginBottom: '1rem',
+    width: '100%'
   },
   stats: {
     display: 'flex', 
@@ -57,8 +59,8 @@ export class Dashboard extends Component {
 
     return (
       <div style={styles.root}>
-        <Paper style={styles.paper}>
-          <Card>
+        <Header />
+          <Card style={styles.card}>
             <CardTitle style={styles.title}
               titleColor="white"
               subtitleColor="white"
@@ -78,15 +80,18 @@ export class Dashboard extends Component {
                 <Chip style={styles.chip}>
                   Raphael : 1
                 </Chip>
+                <Chip style={styles.chip}>
+                  Raphael : 1
+                </Chip><Chip style={styles.chip}>
+                  Raphael : 1
+                </Chip>
               </div>
             </CardText>
             <CardActions>
               <RaisedButton label="View Stats" secondary={true}/>
             </CardActions>
           </Card>
-        </Paper>
-        <Paper style={styles.paper}>
-        <Card>
+        <Card style={styles.card}>
           <CardTitle style={styles.title}
             titleColor="white"
             subtitleColor="white"
@@ -112,9 +117,7 @@ export class Dashboard extends Component {
             <RaisedButton label="View Stats" secondary={true}/>
           </CardActions>
         </Card>
-      </Paper>
-      <Paper style={styles.paper}>
-      <Card>
+      <Card style={styles.card}>
         <CardTitle style={styles.title}
           titleColor="white"
           subtitleColor="white"
@@ -140,7 +143,6 @@ export class Dashboard extends Component {
           <RaisedButton label="View Stats" secondary={true}/>
         </CardActions>
       </Card>
-    </Paper>
     </div>
     )
   }

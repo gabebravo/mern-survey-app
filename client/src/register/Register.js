@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import * as actions from './register_actions'
 import axios from 'axios'
-
 import RegisterForm from './RegisterForm'
 import RegisterModal from './RegisterModal'
 
@@ -31,8 +30,8 @@ class Register extends Component {
   }
   
   handleSave = () => {
-// NOTES : the data that is passed in the request needs to be formatted
-// like this : {name: "Jerry Berry", email: "JB123@gmail.com", password: "jearbear"}
+// NOTES : data passed in request needs to be formatted like this : 
+// {name: "Jerry Berry", email: "JB123@gmail.com", password: "jearbear"}
     const { firstName, lastName, email, password } = {...this.props.registerForm};
     const postBody = { name: `${firstName} ${lastName}`, email, password };
     axios.post('/user', postBody)
