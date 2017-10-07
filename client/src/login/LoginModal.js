@@ -1,12 +1,12 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import Dialog from 'material-ui/Dialog';
+import Dialog from 'material-ui/Dialog'
 import FlatButton from 'material-ui/FlatButton'
 
 const LoginModal = ({ title, isOpen, body, handleToggle, isAuthenticated }) => {
   const actions = isAuthenticated ?
   [
-    <Link to={'/dashboard'}>
+    <Link className="open-search" to={'/dashboard'}>
       <FlatButton
         label={"OK"}
         primary={true}

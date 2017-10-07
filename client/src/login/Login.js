@@ -12,7 +12,10 @@ class Login extends Component {
     isOpen: false,
     modalTitle: null,
     modalBody: null,
-    isAuthenticated: false
+  }
+
+  componentWillMount = () => {
+    this.props.resetUserData();
   }
 
   toggleModal = () => {
@@ -37,11 +40,15 @@ class Login extends Component {
         });
         this.props.resetLoginForm();
       } else if (response.data.success) {
+        this.props.setUserData({
+          isAuthenticated: true, 
+          username: response.data.name,
+          isAdmin: response.data.admin
+        })
         this.setState({ 
           isOpen: !this.state.isOpen,
           modalTitle: "Success",
           modalBody: response.data.message, 
-          isAuthenticated: true
         });
         sessionStorage.setItem('token', response.data.token)
         this.props.resetLoginForm();
@@ -49,6 +56,7 @@ class Login extends Component {
     })
     .catch( response => {
       this.setState({ 
+        isAuthenticated: false,
         isOpen: !this.state.isOpen,
         modalTitle: "Error",
         modalBody: "We were unable to authenticate those credentials. Please try again."
@@ -59,6 +67,7 @@ class Login extends Component {
 
   render() {
     const { email, password } = this.props.loginForm; 
+    const { isAuthenticated, username, isAdmin } = this.props.userData; 
     return (
       <div>
         <LoginForm email={email} password={password} 
@@ -68,12 +77,12 @@ class Login extends Component {
           isOpen={this.state.isOpen}
           body={this.state.modalBody}
           handleToggle={this.toggleModal}
-          isAuthenticated={this.state.isAuthenticated}
+          isAuthenticated={isAuthenticated}
         />
       </div>
     )
   }
 }
 
-const mapStateToProps = ({ loginForm }) => ({ loginForm })
+const mapStateToProps = ({ loginForm, userData }) => ({ loginForm, userData })
 export default connect(mapStateToProps,actions)(Login)

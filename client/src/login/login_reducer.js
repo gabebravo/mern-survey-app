@@ -1,4 +1,5 @@
-import { SET_LOGIN_FORM, RESET_LOGIN_FORM, } from './login_actions'
+import { SET_LOGIN_FORM, RESET_LOGIN_FORM, 
+  SET_USER_DATA, RESET_USER_DATA } from './login_actions'
 
 export const loginForm = (state = {
     email: '', password: ''
@@ -9,5 +10,24 @@ export const loginForm = (state = {
     case RESET_LOGIN_FORM :
       return Object.assign({}, {}, { email: '', password: '' });
     default : return state;
+  }
+}
+
+export const userData = (state = {
+  isAuthenticated: false, 
+  username: null,
+  isAdmin: false
+}, action) => {
+  switch(action.type){
+    case SET_USER_DATA :
+      return Object.assign({}, state, action.userData)
+    case RESET_USER_DATA : 
+      return Object.assign({}, {}, {
+        isAuthenticated: false, 
+        username: null,
+        isAdmin: false
+      });
+    default:
+      return state;
   }
 }

@@ -1,20 +1,13 @@
-import Paper from 'material-ui/Paper';
+import React from 'react'
+import { Link } from 'react-router-dom'
+import Spinner from '../reusable/Spinner'
 import {Card, CardActions, CardTitle, CardText} from 'material-ui/Card';
 import Chip from 'material-ui/Chip';
 import RaisedButton from 'material-ui/RaisedButton';
 
 const styles = {
-  root: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
   title: {
     backgroundColor: '#26c6da',
-    textShadow: '0 0 0.125px black'
-  },
-  paper: {
-    marginBottom: '1rem'
   },
   stats: {
     display: 'flex', 
@@ -22,40 +15,46 @@ const styles = {
   }, 
   chip: {
     margin: 4,
+  }, 
+  button: {
+    marginLeft: 15, 
+    width: '7.5rem'
   }
 };
 
- const SurveyItem = ({ name, description, stats }) => (
-    <div style={styles.root}>
-      <Paper style={styles.paper}>
-        <Card>
-          <CardTitle style={styles.title}
-            titleColor="white"
-            subtitleColor="white"
-            title={surveyTitle} 
-            subtitle={surveyDescription} />
-          <CardText>
-            <div style={styles.stats}>
-              <Chip style={styles.chip}>
-                Michaelangelo: 2
-              </Chip>
-              <Chip style={styles.chip}>
-                Donatello : 2
-              </Chip>
-              <Chip style={styles.chip}>
-                Leonardo : 2
-              </Chip>
-              <Chip style={styles.chip}>
-                Raphael : 1
-              </Chip>
-            </div>
-          </CardText>
-          <CardActions>
-            <RaisedButton label="View Stats" secondary={true}/>
-          </CardActions>
-        </Card>
-      </Paper>
-  </div>
-);
+const printSurveyStats = statsObj => {
+  let SurveyItems = [];
+  for ( let key in statsObj ) {
+    SurveyItems.push(
+      <Chip key={key} style={styles.chip}>
+        {`${key} ${statsObj[key]}`}
+      </Chip>
+    )
+  }
+  return SurveyItems;
+}
 
-  export default SurveyItem
+ const SurveyItem = ({ survey }) => {
+   const { id, name, description, stats } = survey;
+   const statsItems = typeof stats === 'object' ? printSurveyStats(stats) : <Spinner />
+   return (
+    <Card className="dashboard-card">
+      <CardTitle style={styles.title}
+        titleColor="white"
+        subtitleColor="white"
+        title={name} 
+        subtitle={description} />
+      <CardText>
+        <div style={styles.stats}>{statsItems}</div>
+      </CardText>
+      <CardActions>
+        <Link to={`/chart/${id}`}>
+          <RaisedButton style={styles.button}
+          label="Details" secondary={true}/>
+        </Link>
+      </CardActions>
+    </Card>
+   )
+ }
+
+export default SurveyItem
