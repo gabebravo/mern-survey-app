@@ -67,7 +67,7 @@ class Login extends Component {
 
   render() {
     const { email, password } = this.props.loginForm; 
-    const { isAuthenticated, username, isAdmin } = this.props.userData; 
+    const { isAuthenticated } = this.props.userData; 
     return (
       <div>
         <LoginForm email={email} password={password} 

@@ -40,7 +40,7 @@ const LoginForm = ({ email, password, handleTextInput, handleLogin }) => (
                 id="email" name="email"
               /><br />
               <TextField 
-                type="text"
+                type="password"
                 value={password}
                 hintText="password"
                 floatingLabelText="Enter Password"

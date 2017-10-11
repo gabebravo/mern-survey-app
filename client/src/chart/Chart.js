@@ -1,7 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import Header from '../reusable/Header'
-import LoginMessage from '../reusable/LoginMessage'
 import { Pie } from 'react-chartjs-2'
 import {Card, CardActions, CardTitle, CardText} from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';

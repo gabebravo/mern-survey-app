@@ -60,7 +60,7 @@ class Register extends Component {
         this.setState({ 
           isOpen: !this.state.isOpen,
           modalTitle: "Error",
-          modalBody: "We were unable to regiter the user. Please try again.",
+          modalBody: "We were unable to register the user. Please try again.",
           modalButton: "OK", 
           shouldLinkToHomepage: false
         });
