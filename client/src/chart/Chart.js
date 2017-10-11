@@ -49,8 +49,7 @@ const Chart = ({ id, surveys, userData }) => {
   const chart = buildChart(survey.stats);
   return (
     <div style={styles.root}>
-      <Header username={userData.username || ''} 
-        isAdmin={userData.isAdmin || false} />
+      <Header />
       <Card className="dashboard-card">
         <CardTitle style={styles.title}
           titleColor="white"

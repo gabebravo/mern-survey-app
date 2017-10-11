@@ -40,8 +40,7 @@ export class Dashboard extends Component {
         <div style={styles.root}><LoginMessage /></div>
       ) : (
         <div style={styles.root}>
-          <Header username={this.props.userData.username || ''} 
-          isAdmin={this.props.userData.isAdmin || false} />
+          <Header />
           <SurveyList surveys={this.props.surveys} isAdmin={this.props.userData.isAdmin} />
         </div>
       )
