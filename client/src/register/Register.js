@@ -15,6 +15,10 @@ class Register extends Component {
     shouldLinkToHomepage: true
   }
 
+  componentWillUnmount = () => {
+    this.props.resetRegisterForm();
+  }
+
   handleTextInput = event => {
     this.props.setRegisterForm(event.target.id, { [`${event.target.id}`]: event.target.value });
     this.isValid(this.props.registerForm);
