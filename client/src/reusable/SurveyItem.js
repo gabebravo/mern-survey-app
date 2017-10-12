@@ -4,6 +4,7 @@ import Spinner from '../reusable/Spinner'
 import {Card, CardActions, CardTitle, CardText} from 'material-ui/Card';
 import Chip from 'material-ui/Chip';
 import RaisedButton from 'material-ui/RaisedButton';
+import ActionButton from './ActionButton';
 
 const styles = {
   title: {
@@ -34,8 +35,8 @@ const printSurveyStats = statsObj => {
   return SurveyItems;
 }
 
- const SurveyItem = ({ survey }) => {
-   const { id, name, description, stats } = survey;
+ const SurveyItem = ({ survey, isAdmin }) => {
+   const { id, name, description, stats, length, users } = survey;
    const statsItems = typeof stats === 'object' ? printSurveyStats(stats) : <Spinner />
    return (
     <Card className="dashboard-card">
@@ -47,11 +48,17 @@ const printSurveyStats = statsObj => {
       <CardText>
         <div style={styles.stats}>{statsItems}</div>
       </CardText>
-      <CardActions>
+      <CardActions style={styles.stats}>
         <Link to={`/chart/${id}`}>
           <RaisedButton style={styles.button}
           label="Details" secondary={true}/>
         </Link>
+        <ActionButton 
+          surveyStats={stats} 
+          numberOfVotes={length} 
+          voters={users}
+          isAdmin={isAdmin}
+        />
       </CardActions>
     </Card>
    )

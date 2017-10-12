@@ -43,7 +43,8 @@ class Login extends Component {
         this.props.setUserData({
           isAuthenticated: true, 
           username: response.data.name,
-          isAdmin: response.data.admin
+          isAdmin: response.data.admin, 
+          email: response.data.email
         })
         this.setState({ 
           isOpen: !this.state.isOpen,

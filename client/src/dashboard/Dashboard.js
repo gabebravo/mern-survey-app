@@ -24,7 +24,8 @@ export class Dashboard extends Component {
     .then( response => {
       if(response.data){
         const statsArr = _.transform(response.data, (arr, val, key) => {
-          arr.push({ id: val._id, name: val.name, description: val.description, stats: val.stats });
+          arr.push({ id: val._id, name: val.name, description: val.description, 
+            stats: val.stats, length: val.users.length, users: val.users });
         }, []);
         this.props.setSurveys(statsArr);
       } 
@@ -41,7 +42,8 @@ export class Dashboard extends Component {
       ) : (
         <div style={styles.root}>
           <Header />
-          <SurveyList surveys={this.props.surveys} isAdmin={this.props.userData.isAdmin} />
+          <SurveyList surveys={this.props.surveys} 
+            isAdmin={this.props.userData.isAdmin} />
         </div>
       )
     )

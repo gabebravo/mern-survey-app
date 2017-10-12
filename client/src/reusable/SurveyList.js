@@ -11,10 +11,10 @@ const styles = {
   }
 }
 
-const printSurveys = arr => {
+const printSurveys = (arr, isAdmin) => {
   return arr.map( (survey, index) => {
     return (
-      <SurveyItem key={index} survey={survey} />
+      <SurveyItem key={index} survey={survey} isAdmin={isAdmin} />
     )
   })
 }
