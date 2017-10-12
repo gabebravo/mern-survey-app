@@ -1,22 +1,24 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import * as actions from './survey_actions'
+import * as surveyActions from './survey_actions'
+import * as rootActions from '../actions'
+import { bindActionCreators } from 'redux'
 import axios from 'axios'
 import SurveyForm from './SurveyForm'
-import SurveyModal from './SurveyModal'
+import GenericModal from '../reusable/GenericModal'
 
 export class Survey extends Component {
 
   toggleModal = flag => {
-    this.props.toggleSurveyModal(flag);
+    this.props.rootActions.toggleGenericModal(flag);
   }
 
   handleTextField = event => {
-    this.props.setSurveyForm(event.target.id, { [`${event.target.id}`]: event.target.value})
+    this.props.surveyActions.setSurveyForm(event.target.id, { [`${event.target.id}`]: event.target.value})
   }
 
   handleDatePicker = (event, date) => { // params are required
-    this.props.setSurveyExpDate(date)
+    this.props.surveyActions.setSurveyExpDate(date)
   }
 
   handleSave = () => {
@@ -38,41 +40,41 @@ export class Survey extends Component {
     })
     .then( response => {
       if(response.data.survey){
-        this.props.setSurveyModal({ 
-          isOpen: !this.props.surveyModal.isOpen,
+        this.props.rootActions.setGenericModal({ 
+          isOpen: !this.props.genericModal.isOpen,
           modalTitle: "Success",
           modalBody: response.data.message,
           modalButton: "OK", 
           shouldLinkToDashboard: true
         });
       } else {
-        this.props.setSurveyModal({ 
-          isOpen: !this.props.surveyModal.isOpen,
+        this.props.rootActions.setGenericModal({ 
+          isOpen: !this.props.genericModal.isOpen,
           modalTitle: "Error",
           modalBody: response.data.message, 
           modalButton: "OK", 
           shouldLinkToDashboard: false
         });
       }
-      this.props.resetSurveyForm();
+      this.props.surveyActions.resetSurveyForm();
     })
     .catch( response => {
       if(Error){ // this works!
-        this.props.setSurveyModal({ 
-          isOpen: !this.props.surveyModal.isOpen,
+        this.props.rootActions.setGenericModal({ 
+          isOpen: !this.props.genericModal.isOpen,
           modalTitle: "Error",
           modalBody: "We were unable to save the survey. Please try again.",
           modalButton: "OK", 
           shouldLinkToDashboard: false
         });
-        this.props.resetSurveyForm();
+        this.props.surveyActions.resetSurveyForm();
       }
     });
   }
 
   render() {
     const { modalTitle, isOpen, modalBody, 
-        modalButton, shouldLinkToDashboard, } = this.props.surveyModal
+        modalButton, shouldLinkToDashboard, } = this.props.genericModal
     return (
       <div>
         <SurveyForm 
@@ -81,7 +83,7 @@ export class Survey extends Component {
           handleDateInput={ this.handleDatePicker }
           handleSave={ this.handleSave }
         />
-        <SurveyModal
+        <GenericModal
           title={modalTitle}
           isOpen={isOpen}
           body={modalBody}
@@ -94,5 +96,10 @@ export class Survey extends Component {
   }
 }
 
-const mapStateToProps = ({ surveyForm, surveyModal }) => ({ surveyForm, surveyModal })
-export default connect(mapStateToProps, actions)(Survey)
+const mapStateToProps = ({ surveyForm, genericModal }) => ({ surveyForm, genericModal })
+const mapDispatchToProps = dispatch => ({
+  surveyActions: bindActionCreators(surveyActions, dispatch),
+  rootActions: bindActionCreators(rootActions, dispatch)
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Survey)

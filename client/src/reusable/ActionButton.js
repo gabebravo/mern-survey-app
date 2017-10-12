@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import * as actions from '../dashboard/dashboard_action'
 import RaisedButton from 'material-ui/RaisedButton'
 
 const styles = {
@@ -15,10 +16,10 @@ export class ActionButton extends Component {
 
   render() {
     let button = '';
-    const { surveyStats, numberOfVotes, voters, isAdmin } = this.props;
+    const { surveyStats, numberOfVotes, voters, isAdmin, surveyId } = this.props;
     if( isAdmin && numberOfVotes === 0 ) { 
       button = <RaisedButton style={styles.button}
-      label="Delete" secondary={true}/>
+      label="Delete" onClick={() => this.props.handleSurveyDeletion(surveyId)} secondary={true}/>
     } else if ( !isAdmin ) {
       const [userHasVoted] = this.userAlreadyVoted(voters, this.props.userData.email)
       if( !userHasVoted ) {
@@ -33,4 +34,4 @@ export class ActionButton extends Component {
 }
 
 const mapStateToProps = ({ userData }) => ({ userData })
-export default connect(mapStateToProps, null)(ActionButton)
+export default connect(mapStateToProps, actions)(ActionButton)

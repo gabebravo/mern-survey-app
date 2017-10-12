@@ -58,6 +58,7 @@ const printSurveyStats = statsObj => {
           numberOfVotes={length} 
           voters={users}
           isAdmin={isAdmin}
+          surveyId={id}
         />
       </CardActions>
     </Card>
