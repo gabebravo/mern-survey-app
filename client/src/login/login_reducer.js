@@ -16,7 +16,8 @@ export const loginForm = (state = {
 export const userData = (state = {
   isAuthenticated: false, 
   username: null,
-  isAdmin: false
+  isAdmin: false, 
+  email: ''
 }, action) => {
   switch(action.type){
     case SET_USER_DATA :
@@ -25,7 +26,8 @@ export const userData = (state = {
       return Object.assign({}, {}, {
         isAuthenticated: false, 
         username: null,
-        isAdmin: false
+        isAdmin: false, 
+        email: ''
       });
     default:
       return state;

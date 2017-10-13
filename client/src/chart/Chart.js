@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import Header from '../reusable/Header'
+import VotingSelector from './VotingSelector'
 import { Pie } from 'react-chartjs-2'
 import {Card, CardActions, CardTitle, CardText} from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -43,30 +44,45 @@ const buildChart = data => {
     };
   }
 
-const Chart = ({ id, surveys, userData }) => {
-  const survey = surveys.filter( survey => survey.id === id)[0];
-  const chart = buildChart(survey.stats);
-  return (
-    <div style={styles.root}>
-      <Header />
-      <Card className="dashboard-card">
-        <CardTitle style={styles.title}
-          titleColor="white"
-          subtitleColor="white"
-          title={survey.name}
-          subtitle={survey.description} />
-        <CardText>
-          <Pie data={chart}/>
-        </CardText>
-        <CardActions>
-          <Link to={'/dashboard'}>
-            <RaisedButton style={styles.button}
-            label="Return" secondary={true}/>
-          </Link>
-        </CardActions>
-      </Card>
-    </div> 
-  )
+class Chart extends Component {
+
+  userAlreadyVoted = (users, email) => users.findIndex( user => user.id === email );
+
+  render() {
+    const { id, surveys, userData } = this.props;
+    const [survey] = [...surveys].filter( survey => survey.id === id);
+    let chart = <div/>
+    let votingOptions = (
+      <Link to={'/dashboard'}>
+        <RaisedButton style={styles.button}
+        label="Return" secondary={true}/>
+      </Link>
+    )
+
+    if( survey.users.length === 0 ) {
+      votingOptions = <VotingSelector />;
+    } else if ( survey.users.length > 0 ) {
+      const userHasVoted = this.userAlreadyVoted(survey.users, userData.email)
+      userHasVoted > -1 ? 
+        chart = <Pie data={buildChart(survey.stats)}/> : 
+        votingOptions = <VotingSelector />
+    }
+
+    return(
+      <div style={styles.root}>
+        <Header />
+        <Card className="dashboard-card">
+          <CardTitle style={styles.title}
+            titleColor="white"
+            subtitleColor="white"
+            title={survey.name}
+            subtitle={survey.description} />
+          <CardText>{chart}</CardText>
+          <CardActions>{votingOptions}</CardActions>
+        </Card>
+      </div> 
+    )
+  }
 }
 
 export default Chart;

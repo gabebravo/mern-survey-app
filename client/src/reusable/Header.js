@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import * as actions from '../dashboard/dashboard_action'
 import { Link } from 'react-router-dom';
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
@@ -25,7 +26,7 @@ class Header extends Component {
         }
         onTitleTouchTap={handleTouchTap}
         iconElementLeft={<Link to={'/'}>
-          <IconButton><NavigationClose color="white" /></IconButton></Link>}
+          <IconButton onClick={this.props.resetSurveys}><NavigationClose color="white" /></IconButton></Link>}
         iconElementRight={ this.props.userData.isAdmin ? <Link to={'/survey'}>
           <FlatButton style={{ color: '#fff'}} label="Create Survey" /></Link> : <div></div>}
       />
@@ -34,4 +35,4 @@ class Header extends Component {
  }
 
 const mapStateToProps = ({ userData }) => ({ userData })
-export default connect(mapStateToProps, null)(Header)
+export default connect(mapStateToProps, actions)(Header)

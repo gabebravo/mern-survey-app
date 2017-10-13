@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import Spinner from '../reusable/Spinner'
 import {Card, CardActions, CardTitle, CardText} from 'material-ui/Card';
@@ -23,46 +24,65 @@ const styles = {
   }
 };
 
-const printSurveyStats = statsObj => {
-  let SurveyItems = [];
-  for ( let key in statsObj ) {
-    SurveyItems.push(
-      <Chip key={key} style={styles.chip}>
-        {`${key} ${statsObj[key]}`}
-      </Chip>
-    )
+class SurveyItem extends Component {
+
+  printSurveyStats = statsObj => {
+    let SurveyItems = [];
+    for ( let key in statsObj ) {
+      SurveyItems.push(
+        <Chip key={key} style={styles.chip}>
+          {`${key} ${statsObj[key]}`}
+        </Chip>
+      )
+    }
+    return SurveyItems;
   }
-  return SurveyItems;
+  
+  userAlreadyVoted = (users, email) => {
+    return users.findIndex( user => user.id === email );
+  }
+
+  render() {
+    const { survey, isAdmin, userData } = this.props;
+    const { id, name, description, stats, length, users } = survey;
+
+    let statsItems = this.printSurveyStats(stats);
+    let linkToChart = (
+      <Link to={`/chart/${id}`}>
+        <RaisedButton style={styles.button}
+        label="Details" secondary={true}/>
+      </Link>
+     )
+
+    if( !userData.isAdmin && 
+      this.userAlreadyVoted(users, userData.email) === -1 ) {
+      linkToChart = <div/>
+    }
+
+    return(
+      <Card className="dashboard-card">
+        <CardTitle style={styles.title}
+          titleColor="white"
+          subtitleColor="white"
+          title={name} 
+          subtitle={description} />
+        <CardText>
+          <div style={styles.stats}>{statsItems}</div>
+        </CardText>
+        <CardActions style={styles.stats}>
+          {linkToChart}
+          <ActionButton 
+            surveyStats={stats} 
+            numberOfVotes={length} 
+            voters={users}
+            isAdmin={isAdmin}
+            surveyId={id}
+          />
+        </CardActions>
+      </Card>
+    );
+  }
 }
 
- const SurveyItem = ({ survey, isAdmin }) => {
-   const { id, name, description, stats, length, users } = survey;
-   const statsItems = typeof stats === 'object' ? printSurveyStats(stats) : <Spinner />
-   return (
-    <Card className="dashboard-card">
-      <CardTitle style={styles.title}
-        titleColor="white"
-        subtitleColor="white"
-        title={name} 
-        subtitle={description} />
-      <CardText>
-        <div style={styles.stats}>{statsItems}</div>
-      </CardText>
-      <CardActions style={styles.stats}>
-        <Link to={`/chart/${id}`}>
-          <RaisedButton style={styles.button}
-          label="Details" secondary={true}/>
-        </Link>
-        <ActionButton 
-          surveyStats={stats} 
-          numberOfVotes={length} 
-          voters={users}
-          isAdmin={isAdmin}
-          surveyId={id}
-        />
-      </CardActions>
-    </Card>
-   )
- }
-
-export default SurveyItem
+const mapStateToProps = ({ userData }) => ({ userData })
+export default connect(mapStateToProps, null)(SurveyItem)

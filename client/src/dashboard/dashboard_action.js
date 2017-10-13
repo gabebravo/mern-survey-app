@@ -5,6 +5,11 @@ export const setSurveys = surveys => ({
     type: SET_SURVEYS, surveys
 })
 
+export const RESET_SURVEYS = 'RESET_SURVEYS';
+export const resetSurveys = () => ({
+    type: RESET_SURVEYS, reset: null
+})
+
 export const DELETE_SURVEY = 'DELETE_SURVEY';
 export const deleteSurvey = id => ({
     type: DELETE_SURVEY, id

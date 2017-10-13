@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import * as actions from '../dashboard/dashboard_action'
+import { Link } from 'react-router-dom'
 import RaisedButton from 'material-ui/RaisedButton'
 
 const styles = {
@@ -23,8 +24,11 @@ export class ActionButton extends Component {
     } else if ( !isAdmin ) {
       const [userHasVoted] = this.userAlreadyVoted(voters, this.props.userData.email)
       if( !userHasVoted ) {
-        button = <RaisedButton style={styles.button}
-        label="Vote" secondary={true}/>
+        button = ( 
+          <Link to={`/chart/${surveyId}`}>
+            <RaisedButton style={styles.button}
+            label="Vote" secondary={true}/>
+          </Link> )
       }
     }
     return (
