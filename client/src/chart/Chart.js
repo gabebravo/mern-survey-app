@@ -60,12 +60,12 @@ class Chart extends Component {
     )
 
     if( survey.users.length === 0 ) {
-      votingOptions = <VotingSelector />;
+      votingOptions = <VotingSelector surveyData={survey} />;
     } else if ( survey.users.length > 0 ) {
       const userHasVoted = this.userAlreadyVoted(survey.users, userData.email)
       userHasVoted > -1 ? 
         chart = <Pie data={buildChart(survey.stats)}/> : 
-        votingOptions = <VotingSelector />
+        votingOptions = <VotingSelector surveyData={survey} />
     }
 
     return(
