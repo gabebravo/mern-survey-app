@@ -5,9 +5,9 @@ const jwt = require('jsonwebtoken');
 const bodyParser = require('body-parser');
 const userRouter = require('../routes/user');
 const surveyRouter = require('../routes/survey');
+const mongoose = require('mongoose');
 
 const port = process.env.PORT || 3001,
-const mongoose = require('mongoose');
 const db = process.env.MONGO || 'mongodb://localhost:27017/testSurvey'
 
 mongoose.Promise = global.Promise;
