@@ -18,7 +18,7 @@ const app = express();
 const port = process.env.PORT || 3001,
 
 // import and use body parser
-this.app.use(bodyParser.json())
+// app.use(bodyParser.json())
 
 // this is will add the client in deployment
 if (process.env.NODE_ENV === 'production') {
