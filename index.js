@@ -3,8 +3,10 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const bodyParser = require('body-parser');
+const userRouter = require('../routes/user');
+const surveyRouter = require('../routes/survey');
 
-// mongose setup & config
+const port = process.env.PORT || 3001,
 const mongoose = require('mongoose');
 const db = process.env.MONGO || 'mongodb://localhost:27017/testSurvey'
 
@@ -15,24 +17,11 @@ mongoose.connect(db, {
 
 // import express and instantiate a server
 const app = express();
-const port = process.env.PORT || 3001,
-
-// import and use body parser
-// app.use(bodyParser.json())
-
-// this is will add the client in deployment
-
-
-
-const userRouter = require('../routes/user');
-app.use(express.static('client/build'));
 app.use('/user', userRouter);
-
-const surveyRouter = require('../routes/survey');
 app.use('/survey', surveyRouter);
-
+app.use(express.static('client/build'));
+app.use(bodyParser.json())
 app.listen(port, () => {
   console.log(`listening on port ${port}`);
 });
-
 module.exports = {app};
