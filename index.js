@@ -6,19 +6,16 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const userRouter = require('./routes/user');
 const surveyRouter = require('./routes/survey');
-const userSchema = require('./schemas/user');
-const surveySchema = require('./schemas/survey');
 const db = require('./lib/db');
 
 db.connect();
 
-// import express and instantiate a server
 const app = express();
-app.use('/user', userRouter);
-app.use('/survey', surveyRouter);
-app.use(express.static('client/build'));
-app.use(bodyParser.json())
 app.listen(process.env.PORT, () => {
   console.log(`now connected`);
 });
-module.exports = {app};
+app.use(express.static('client/build'));
+app.use('/user', userRouter);
+app.use('/survey', surveyRouter);
+app.use(bodyParser.json())
+// import express and instantiate a server
