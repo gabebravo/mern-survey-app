@@ -7,11 +7,8 @@ const userRouter = require('../routes/user');
 const surveyRouter = require('../routes/survey');
 const mongoose = require('mongoose');
 
-const port = process.env.PORT || 3001,
-const db = process.env.MONGO || 'mongodb://localhost:27017/testSurvey'
-
 mongoose.Promise = global.Promise;
-mongoose.connect(db, {
+mongoose.connect(process.env.MONGO, {
   useMongoClient: true, // weird new flag mongoose requires
 });
 
@@ -21,7 +18,7 @@ app.use('/user', userRouter);
 app.use('/survey', surveyRouter);
 app.use(express.static('client/build'));
 app.use(bodyParser.json())
-app.listen(port, () => {
+app.listen(process.env.PORT, () => {
   console.log(`listening on port ${port}`);
 });
 module.exports = {app};
