@@ -5,8 +5,6 @@ const db     = require('./lib/db');
 
 console.log(process.env.PORT)
 
-db.connect({
-  useMongoClient: true,
-  /* other options */
-});
-server.start();
+db.connect(
+  server.start()
+);
