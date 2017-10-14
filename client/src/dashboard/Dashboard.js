@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import * as actions from './dashboard_action'
 import Header from '../reusable/Header'
 import LoginMessage from '../reusable/LoginMessage'
-import SurveyList from '../reusable/SurveyList'
+import SurveyList from './SurveyList'
 import axios from 'axios'
 import _ from 'lodash'
 

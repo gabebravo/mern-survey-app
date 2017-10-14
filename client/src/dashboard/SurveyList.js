@@ -1,6 +1,6 @@
 import React from 'react'
 import Spinner from '../reusable/Spinner'
-import SurveyItem from '../reusable/SurveyItem'
+import SurveyItem from './SurveyItem'
 
 const styles = {
   root: { 

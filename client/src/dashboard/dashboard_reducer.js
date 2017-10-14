@@ -1,4 +1,4 @@
-import { SET_SURVEYS, RESET_SURVEYS, DELETE_SURVEY } from './dashboard_action'
+import { SET_SURVEYS, RESET_SURVEYS, DELETE_SURVEY } from './dashboard_actions'
 
 export const surveys = (state = null, action) => {
   switch(action.type) {

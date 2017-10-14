@@ -22,8 +22,6 @@ const styles = {
   }
 };
 
-const ROOT_URL = 'http://localhost:3000/';
-
 class VotingSelector extends Component {
 
   state = {
@@ -42,7 +40,7 @@ class VotingSelector extends Component {
     // route : rootUrl/survey/vote/:id >> body : { "topic": "Bengal" }  
     return axios({
       method: 'post',
-      url: `${ROOT_URL}survey/increment/${id}`,
+      url: `survey/increment/${id}`,
       headers: {"x-access-token": sessionStorage.getItem('token')},
       data: { "topic": topic }
     })
@@ -52,7 +50,7 @@ class VotingSelector extends Component {
     // route : rootUrl/survey/vote/:id >> body : { "id": USER_ID }
     return axios({
       method: 'post',
-      url: `${ROOT_URL}survey/vote/${id}`,
+      url: `survey/vote/${id}`,
       headers: {"x-access-token": sessionStorage.getItem('token')},
       data: { "id": email }
     })

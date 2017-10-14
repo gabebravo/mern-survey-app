@@ -4,11 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "concurrently \"npm run server\" \"npm run client\"",
-    "server": "nodemon index.js",
-    "client": "nodemon start-client.js",
-    "test": "export NODE_ENV=localtest || SET \"NODE_ENV=localtest\" && mocha server/**/*.test.js",
-    "test-watch": "export NODE_ENV=localtest && nodemon --exec 'npm test'"
+    "start": "node index.js",
+    "test": "mocha"
   },
   "author": "",
   "license": "ISC",
