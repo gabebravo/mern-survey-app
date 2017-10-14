@@ -5,7 +5,10 @@ const db     = require('./lib/db');
 
 console.log(process.env.PORT)
 
-db.connect((err) => {
+db.connect({
+  useMongoClient: true,
+  /* other options */
+}, (err) => {
   if (err) {
     return console.log(`DB is not working...`);
   }
