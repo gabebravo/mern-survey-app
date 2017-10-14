@@ -14,7 +14,6 @@ class GenericModal extends Component {
   render() {
     const { title, isOpen, body, modalBtn, 
       handleToggle, shouldLink, link } = this.props;
-      console.log(shouldLink)
       const actions = shouldLink ?
       [
         <Link to={link}>

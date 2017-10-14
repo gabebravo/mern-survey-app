@@ -17,7 +17,7 @@ export class ActionButton extends Component {
 
   render() {
     let button = '';
-    const { surveyStats, numberOfVotes, voters, isAdmin, surveyId } = this.props;
+    const { numberOfVotes, voters, isAdmin, surveyId } = this.props;
     if( isAdmin && numberOfVotes === 0 ) { 
       button = <RaisedButton style={styles.button}
       label="Delete" onClick={() => this.props.handleSurveyDeletion(surveyId)} secondary={true}/>

@@ -3,7 +3,7 @@ import { combineReducers } from 'redux';
 import { registerForm } from './register/register_reducer'
 import { loginForm, userData } from './login/login_reducer'
 import { surveys } from './dashboard/dashboard_reducer'
-import { surveyForm, surveyModal } from './survey/survey_reducer'
+import { surveyForm } from './survey/survey_reducer'
 
 // shared reuasble actions
 import { SET_GENERIC_MODAL, RESET_GENERIC_MODAL, TOGGLE_GENERIC_MODAL 

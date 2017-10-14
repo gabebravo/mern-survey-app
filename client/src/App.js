@@ -10,12 +10,11 @@ import Register from './register/Register';
 import Dashboard from './dashboard/Dashboard';
 import Chart from './chart/ChartContainer';
 import Survey from './survey/Survey';
+import Page404 from './reusable/page404';
 
 const NoMatch = ({ location }) => (
-  <div>
-    <h3>No match for <code>{location.pathname}</code></h3>
-  </div>
-)
+  <Page404 badUrl={location.pathname} />
+);
 
 class App extends Component {
   render() {

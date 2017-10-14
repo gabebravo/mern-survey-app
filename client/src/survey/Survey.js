@@ -5,6 +5,7 @@ import * as rootActions from '../actions'
 import { bindActionCreators } from 'redux'
 import axios from 'axios'
 import SurveyForm from './SurveyForm'
+import LoginMessage from '../reusable/LoginMessage'
 import GenericModal from '../reusable/GenericModal'
 
 export class Survey extends Component {
@@ -77,28 +78,32 @@ export class Survey extends Component {
     const { modalTitle, isOpen, modalBody, 
         modalButton, shouldLink, link } = this.props.genericModal
     return (
-      <div>
-        <SurveyForm 
-          surveyFormData={ this.props.surveyForm }
-          handleTextInput={ this.handleTextField }
-          handleDateInput={ this.handleDatePicker }
-          handleSave={ this.handleSave }
-        />
-        <GenericModal
-          title={modalTitle}
-          isOpen={isOpen}
-          body={modalBody}
-          handleToggle={this.toggleModal}
-          shouldLink={shouldLink}
-          modalBtn={modalButton}
-          link={link}
-        />
-      </div>
+      this.props.userData.isAdmin ? ( 
+        <div>
+          <SurveyForm 
+            surveyFormData={ this.props.surveyForm }
+            handleTextInput={ this.handleTextField }
+            handleDateInput={ this.handleDatePicker }
+            handleSave={ this.handleSave }
+          />
+          <GenericModal
+            title={modalTitle}
+            isOpen={isOpen}
+            body={modalBody}
+            handleToggle={this.toggleModal}
+            shouldLink={shouldLink}
+            modalBtn={modalButton}
+            link={link}
+          />
+        </div>
+      ) : (
+        <div><LoginMessage /></div>
+      )
     )
   }
 }
 
-const mapStateToProps = ({ surveyForm, genericModal }) => ({ surveyForm, genericModal })
+const mapStateToProps = ({ surveyForm, genericModal, userData }) => ({ surveyForm, genericModal, userData })
 const mapDispatchToProps = dispatch => ({
   surveyActions: bindActionCreators(surveyActions, dispatch),
   rootActions: bindActionCreators(rootActions, dispatch)
