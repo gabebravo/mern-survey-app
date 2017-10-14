@@ -27,6 +27,8 @@ createUser = (req, res) => {
 
 function userLogin(req, res) {
   // find the user
+  console.log('email', req.body.email)
+  console.log('password', req.body.password)
   User.findOne({ email: req.body.email })
     .then( user => {
       if(user.comparePassword(req.body.password)){
