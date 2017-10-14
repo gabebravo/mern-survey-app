@@ -1,15 +1,11 @@
-require('dotenv').config();
 // import dependencies
 const express = require('express');
-// const morgan     = require('morgan');
-const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const {PORT} = require('../config');
 
 // mongose setup & config
 const mongoose = require('mongoose');
-const db = process.env.DATABASE_URL;
+const db = process.env.MONGO || 'mongodb://localhost:27017/testSurvey'
 
 mongoose.Promise = global.Promise;
 mongoose.connect(db, {
@@ -18,7 +14,7 @@ mongoose.connect(db, {
 
 // import express and instantiate a server
 const app = express();
-const port = process.env.PORT;
+const port = process.env.PORT || 3001,
 
 // import and use body parser
 const bodyParser = require('body-parser');
