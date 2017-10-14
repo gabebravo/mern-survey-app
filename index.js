@@ -11,11 +11,13 @@ const db = require('./lib/db');
 db.connect();
 
 const app = express();
+app.use(bodyParser.json())
+app.use(express.static('client/build'));
+
+app.use('/user', userRouter);
+app.use('/survey', surveyRouter);
+
 app.listen(process.env.PORT, () => {
   console.log(`now connected`);
 });
-app.use(express.static('client/build'));
-app.use('/user', userRouter);
-app.use('/survey', surveyRouter);
-app.use(bodyParser.json())
 // import express and instantiate a server
