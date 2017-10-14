@@ -6,8 +6,12 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const userRouter = require('./routes/user');
 const surveyRouter = require('./routes/survey');
+const userSchema = require('./schemas/user');
+const surveySchema = require('./schemas/survey');
 
 mongoose.Promise = global.Promise;
+mongoose.model('User', userSchema);
+mongoose.model('Survey', surveySchema);
 mongoose.connect(process.env.DATABASE_URL, {
   useMongoClient: true, // weird new flag mongoose requires
 });
