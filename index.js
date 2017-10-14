@@ -3,9 +3,9 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const bodyParser = require('body-parser');
-const userRouter = require('../routes/user');
-const surveyRouter = require('../routes/survey');
 const mongoose = require('mongoose');
+const userRouter = require('./routes/user');
+const surveyRouter = require('./routes/survey');
 
 mongoose.Promise = global.Promise;
 mongoose.connect(process.env.MONGO, {
