@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import * as actions from './dashboard_action'
+import * as actions from './dashboard_actions'
 import Header from '../reusable/Header'
 import LoginMessage from '../reusable/LoginMessage'
 import SurveyList from './SurveyList'
