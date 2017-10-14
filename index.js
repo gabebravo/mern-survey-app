@@ -8,13 +8,9 @@ const userRouter = require('./routes/user');
 const surveyRouter = require('./routes/survey');
 const userSchema = require('./schemas/user');
 const surveySchema = require('./schemas/survey');
+const db = require('./lib/db');
 
-mongoose.Promise = global.Promise;
-mongoose.model('User', userSchema);
-mongoose.model('Survey', surveySchema);
-mongoose.connect(process.env.DATABASE_URL, {
-  useMongoClient: true, // weird new flag mongoose requires
-});
+db.connect();
 
 // import express and instantiate a server
 const app = express();
