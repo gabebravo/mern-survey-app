@@ -21,11 +21,11 @@ const port = process.env.PORT || 3001,
 // app.use(bodyParser.json())
 
 // this is will add the client in deployment
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static('client/build'));
-}
+
+
 
 const userRouter = require('../routes/user');
+app.use(express.static('client/build'));
 app.use('/user', userRouter);
 
 const surveyRouter = require('../routes/survey');
