@@ -19,6 +19,6 @@ app.use('/survey', surveyRouter);
 app.use(express.static('client/build'));
 app.use(bodyParser.json())
 app.listen(process.env.PORT, () => {
-  console.log(`listening on port ${port}`);
+  console.log(`now connected`);
 });
 module.exports = {app};
