@@ -2,6 +2,7 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const bodyParser = require('body-parser');
 
 // mongose setup & config
 const mongoose = require('mongoose');
@@ -17,8 +18,7 @@ const app = express();
 const port = process.env.PORT || 3001,
 
 // import and use body parser
-const bodyParser = require('body-parser');
-app.use(bodyParser.json());
+this.app.use(bodyParser.json())
 
 // this is will add the client in deployment
 if (process.env.NODE_ENV === 'production') {
