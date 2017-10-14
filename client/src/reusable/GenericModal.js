@@ -13,10 +13,11 @@ class GenericModal extends Component {
 
   render() {
     const { title, isOpen, body, modalBtn, 
-      handleToggle, shouldLinkToDashboard } = this.props;
-      const actions = shouldLinkToDashboard ?
+      handleToggle, shouldLink, link } = this.props;
+      console.log(shouldLink)
+      const actions = shouldLink ?
       [
-        <Link to={'/dashboard'}>
+        <Link to={link}>
           <FlatButton
             label={modalBtn || "OK"}
             primary={true}

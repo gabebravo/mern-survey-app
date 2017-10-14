@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import * as actions from '../actions'
 import { Link } from 'react-router-dom';
+import GenericModal from '../reusable/GenericModal'
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import axios from 'axios'
@@ -59,21 +61,24 @@ class VotingSelector extends Component {
   handleVoteSubmission = (id, email, topic) => {
     axios.all([this.incrementSurveyScore(id, topic), this.addUserToSurvey(id, email)])
     .then(axios.spread( (scoreInc, addUser) => {
-      // dont need to print >> just need modal and re-direct
-      console.log(scoreInc);
-      console.log(addUser);
+      this.props.setGenericModal({ 
+        isOpen: !this.props.genericModal.isOpen,
+        modalTitle: "Success",
+        modalBody: "Congrats. Your vote has been added",
+        modalButton: "OK", 
+        shouldLink: true,
+        link: '/dashboard'
+      });
     }))
     .catch( response => {
       if(Error){ // this works!
-        console.log('this failed') // dont need add modal error below
-        // this.props.rootActions.setGenericModal({ 
-        //   isOpen: !this.props.genericModal.isOpen,
-        //   modalTitle: "Error",
-        //   modalBody: "We were unable to save the survey. Please try again.",
-        //   modalButton: "OK", 
-        //   shouldLinkToDashboard: false
-        // });
-        // this.props.surveyActions.resetSurveyForm();
+        this.props.setGenericModal({ 
+          isOpen: !this.props.genericModal.isOpen,
+          modalTitle: "Error",
+          modalBody: "We were unable to save your vote. Please try again.",
+          modalButton: "OK", 
+          shouldLink: false
+        });
       }
     });
   }
@@ -92,7 +97,13 @@ class VotingSelector extends Component {
     })
   }
 
+  toggleModal = flag => {
+    this.props.toggleGenericModal(flag);
+  }
+
   render() {
+    const { modalTitle, isOpen, modalBody, 
+      modalButton, shouldLink, link } = this.props.genericModal
     const { id, stats } = this.props.surveyData;
     const radioButtons = this.printButtonOptions( Object.keys(stats) );
     return (
@@ -110,10 +121,19 @@ class VotingSelector extends Component {
           label="Cast Vote" secondary={true} 
           onClick={ () => this.handleVoteSubmission(id, this.props.userData.email, this.state.btnChoice) }
         />
+        <GenericModal
+          title={modalTitle}
+          isOpen={isOpen}
+          body={modalBody}
+          handleToggle={this.toggleModal}
+          shouldLink={shouldLink}
+          modalBtn={modalButton}
+          link={link}
+        />
       </div>
     )
   }
 }
 
-const mapStateToProps = ({ userData }) => ({ userData });
-export default connect(mapStateToProps, null)(VotingSelector);
+const mapStateToProps = ({ userData, genericModal }) => ({ userData, genericModal });
+export default connect(mapStateToProps, actions)(VotingSelector);

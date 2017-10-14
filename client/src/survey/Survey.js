@@ -45,7 +45,8 @@ export class Survey extends Component {
           modalTitle: "Success",
           modalBody: response.data.message,
           modalButton: "OK", 
-          shouldLinkToDashboard: true
+          shouldLink: true,
+          link: '/dashboard'
         });
       } else {
         this.props.rootActions.setGenericModal({ 
@@ -53,7 +54,7 @@ export class Survey extends Component {
           modalTitle: "Error",
           modalBody: response.data.message, 
           modalButton: "OK", 
-          shouldLinkToDashboard: false
+          shouldLink: false
         });
       }
       this.props.surveyActions.resetSurveyForm();
@@ -65,7 +66,7 @@ export class Survey extends Component {
           modalTitle: "Error",
           modalBody: "We were unable to save the survey. Please try again.",
           modalButton: "OK", 
-          shouldLinkToDashboard: false
+          shouldLink: false
         });
         this.props.surveyActions.resetSurveyForm();
       }
@@ -74,7 +75,7 @@ export class Survey extends Component {
 
   render() {
     const { modalTitle, isOpen, modalBody, 
-        modalButton, shouldLinkToDashboard, } = this.props.genericModal
+        modalButton, shouldLink, link } = this.props.genericModal
     return (
       <div>
         <SurveyForm 
@@ -88,8 +89,9 @@ export class Survey extends Component {
           isOpen={isOpen}
           body={modalBody}
           handleToggle={this.toggleModal}
-          shouldLinkToDashboard={shouldLinkToDashboard}
+          shouldLink={shouldLink}
           modalBtn={modalButton}
+          link={link}
         />
       </div>
     )

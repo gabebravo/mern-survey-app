@@ -12,14 +12,14 @@ import { SET_GENERIC_MODAL, RESET_GENERIC_MODAL, TOGGLE_GENERIC_MODAL
 // shared reusable reducer
   export const genericModal = ( state = { 
     isOpen: false, modalTitle: '', modalBody: '', 
-      modalButton: '', shouldLinkToDashboard: false
+      modalButton: '', shouldLink: false, link: ''
   }, action ) => {
     switch(action.type) {
       case SET_GENERIC_MODAL : 
         return action.genericModalData
       case RESET_GENERIC_MODAL : 
         return { ...state, isOpen: false, modalTitle: '', modalBody: '', 
-        modalButton: '', shouldLinkToDashboard: false }
+        modalButton: '', shouldLink: false, link: '' }
       case TOGGLE_GENERIC_MODAL : 
         return { ...state, isOpen: action.modalFlag}
       default :
