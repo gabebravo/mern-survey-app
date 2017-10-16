@@ -10,11 +10,13 @@ import axios from 'axios'
 const styles = {
   buttonGroup: {
     display: 'flex',
-    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
     margin: '0 0 1rem 1rem'
   },
   radioButton: {
-    maxWidth: '15%'
+    display: 'inline-block', 
+    width: 'auto',
   },
   button: {
     marginLeft: 17, 
